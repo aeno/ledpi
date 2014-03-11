@@ -3,7 +3,7 @@ var ledpi = {
     _bits:     12,
 
     _chromath: require('chromath'),
-    _driver: new require('leddriver')(this._channels, this._bits),
+    _driver: new require('leddriver')(ledpi._channels, ledpi._bits),
 
     _current: {
         preset: 'off',
@@ -19,28 +19,28 @@ var ledpi = {
     getStatus: function() {
         console.log('[ledpi] sending status');
 
-        return this._current.preset === 'off' ? 'off' : this._current.preset.getName();
+        return ledpi._current.preset === 'off' ? 'off' : ledpi._current.preset.getName();
     },
 
     run: function(preset) {
-        this.reset();
+        ledpi.reset();
 
         if (preset === 'off') {
             return;
         }
 
         try {
-            this._current.preset = require('./programs/'+preset+'.js');
+            ledpi._current.preset = require('./programs/'+preset+'.js');
         } catch(err) {
             if (err.code == 'MODULE_NOT_FOUND') {
                 console.log('[ledpi] unknown preset "%s"', preset);
-                this.reset();
+                ledpi.reset();
                 return;
             }
         }
 
         // run preset
-        this._current.preset.run(this._current, this._driver);
+        ledpi._current.preset.run(ledpi._current, ledpi._driver);
     },
 
     /**
@@ -50,22 +50,22 @@ var ledpi = {
     reset: function() {
         console.log('[ledpi] resetting LED');
 
-        this._current.state = {
+        ledpi._current.state = {
             h: 0,
             s: 0,
             l: 0,
             rgb: ''
         };
 
-        if (this._current.timer) {
-            clearInterval(this._current.timer);
+        if (ledpi._current.timer) {
+            clearInterval(ledpi._current.timer);
         }
 
-        this.current.timer = null;
-        this.current.preset = 'off';
+        ledpi.current.timer = null;
+        ledpi.current.preset = 'off';
 
-        this._driver.setRGB("#000000", 0, 1, 2);
-        this._driver.send();
+        ledpi._driver.setRGB("#000000", 0, 1, 2);
+        ledpi._driver.send();
     }
 };
 
