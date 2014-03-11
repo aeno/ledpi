@@ -1,0 +1,11 @@
+{
+  "name": "ledpi",
+  "description": "led driver for pi",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "3.5.0",
+    "leddriver": "0.0.3",
+    "chromath": "0.0.2"
+  }
+}
