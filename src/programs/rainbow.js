@@ -32,4 +32,4 @@ var rainbow = {
 };
 
 exports.run = rainbow.run;
-exports.getName = function() { return 'rainbow'; }
+exports.getName = function() { return 'rainbow'; };
