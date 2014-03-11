@@ -1,9 +1,6 @@
 var ledpi = {
-    _channels: 24,
-    _bits:     12,
-
     _chromath: require('chromath'),
-    _driver: new require('leddriver')(ledpi._channels, ledpi._bits),
+    _driver: new require('leddriver')(24, 12),
 
     _current: {
         preset: 'off',
