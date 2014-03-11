@@ -9,7 +9,7 @@
 
 var express = require('express');
 var app = express();
-var ledpi = require('./ledpi.js');
+var ledpi = require('./src/ledpi.js');
 
 app.get('/', function(req, res) {
     res.sendfile('public/index.html');
