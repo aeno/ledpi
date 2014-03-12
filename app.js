@@ -26,6 +26,7 @@ app.get('/main.js', function(req, res) {
 app.get('/run/:preset', function(req, res) {
     switch (req.params.preset) {
         case 'rainbow':
+        case 'rainbow_strip':
         case 'off':
             ledpi.run(req.params.preset);
             break;
