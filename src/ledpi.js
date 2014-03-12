@@ -61,8 +61,10 @@ var ledpi = {
         ledpi._current.timer = null;
         ledpi._current.preset = 'off';
 
-        ledpi._driver.setRGB("#000000", 0, 1, 2);
-        ledpi._driver.send();
+        if (process.env.NODE_ENV != 'nospi') {
+            ledpi._driver.setRGB("#000000", 0, 1, 2);
+            ledpi._driver.send();
+        }
     }
 };
 

@@ -40,5 +40,8 @@ app.get('/status', function(req, res) {
 
 
 var server = app.listen(8080, function() {
-    console.log('Listening on port %d', server.address().port);
+    if (process.env.NODE_ENV == 'nospi') {
+        console.log('RUNNING IN NO SPI MODE');
+    }
+    console.log('Listening on %d', server.address().port);
 });

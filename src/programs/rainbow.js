@@ -2,11 +2,11 @@
  * Cycle through the color space
  * @type Object
  */
+var Chromath = require('chromath');
 var rainbow = {
     run: function(state, driver) {
         console.log('[ledpi rainbow] running preset');
 
-        state.preset = 'rainbow';
         state.timer = setInterval(function() {
             state.state.h += 0.001;
 
@@ -25,8 +25,10 @@ var rainbow = {
                 )
                 .toHexString();
 
-            driver.setRGB(state.state.rgb, 0, 1, 2);
-            driver.send();
+            if (process.env.NODE_ENV != 'nospi') {
+                driver.setRGB(state.state.rgb, 0, 1, 2);
+                driver.send();
+            }
         }, 1);
     }
 };
