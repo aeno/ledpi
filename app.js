@@ -9,7 +9,11 @@
 
 var express = require('express');
 var app = express();
-var ledpi = require('./src/ledpi.js');
+var ledpi = new require('./src/ledpi.js')(24, 12);
+
+if (process.env.NODE_ENV == 'nospi') {
+    console.log('RUNNING IN NO SPI MODE');
+}
 
 app.get('/', function(req, res) {
     res.sendfile('public/index.html');
@@ -38,10 +42,6 @@ app.get('/status', function(req, res) {
     );
 });
 
-
 var server = app.listen(8080, function() {
-    if (process.env.NODE_ENV == 'nospi') {
-        console.log('RUNNING IN NO SPI MODE');
-    }
     console.log('Listening on %d', server.address().port);
 });

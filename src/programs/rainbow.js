@@ -2,36 +2,53 @@
  * Cycle through the color space
  * @type Object
  */
-var Chromath = require('chromath');
-var rainbow = {
-    run: function(state, driver) {
-        console.log('[ledpi rainbow] running preset');
+exports = module.exports = function(state, driver) {
+    var obj = {
+        _state: null,
+        _driver: null,
 
-        state.timer = setInterval(function() {
-            state.state.h += 0.001;
+        getName: function() {
+            return 'rainbow';
+        },
 
-            if (state.state.h > 1) {
-                state.state.h -= 1;
-            }
+        _init: function(state, driver) {
+            console.log('[ledpi rainbow] init');
+            this._state = state;
+            this._driver = driver;
+        },
 
-            state.state.s = 1,
-            state.state.l = 0.5;
+        run: function() {
+            console.log('[ledpi rainbow] running preset');
 
-            state.state.rgb =
-                new Chromath.hsl(
-                    state.state.h * 360,
-                    state.state.s,
-                    state.state.l
-                )
-                .toHexString();
+            var Chromath = require('chromath');
+            var self = this;
 
-            if (process.env.NODE_ENV != 'nospi') {
-                driver.setRGB(state.state.rgb, 0, 1, 2);
-                driver.send();
-            }
-        }, 1);
-    }
+            this._state.timer = setInterval(function() {
+                self._state.state.h += 0.0001;
+
+                if (self._state.state.h > 1) {
+                    self._state.state.h -= 1;
+                }
+
+                self._state.state.s = 1,
+                self._state.state.l = 0.5;
+
+                self._state.state.rgb =
+                    new Chromath.hsl(
+                        self._state.state.h * 360,
+                        self._state.state.s,
+                        self._state.state.l
+                    )
+                    .toHexString();
+
+                if (process.env.NODE_ENV != 'nospi') {
+                    self._driver.setRGB(self._state.state.rgb, 0, 1, 2);
+                    self._driver.send();
+                }
+            }, 1);
+        }
+    };
+
+    obj._init(state, driver);
+    return obj;
 };
-
-exports.run = rainbow.run;
-exports.getName = function() { return 'rainbow'; };
