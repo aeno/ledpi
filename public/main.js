@@ -3,16 +3,9 @@ var statusCallback = function(data) {
 };
 
 $(window).ready(function() {
-    $('#rainbow').on('click', function() {
+    $('.run').on('click', function() {
         $.getJSON(
-            "/run/rainbow",
-            statusCallback
-        );
-    });
-
-    $('#off').on('click', function() {
-        $.getJSON(
-            "/run/off",
+            "/run/"+$(this).data('preset'),
             statusCallback
         );
     });
